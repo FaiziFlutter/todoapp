@@ -67,7 +67,10 @@ class MealsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(title!),
       ),
-      body: content,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: content,
+      ),
     );
   }
 }
