@@ -9,9 +9,7 @@ class MealsScreen extends StatelessWidget {
     super.key,
     this.title,
     required this.meals,
-    required this.onPressed,
   });
-  final void Function(Meal meal) onPressed;
   final String? title;
   final List<Meal> meals;
 
@@ -20,7 +18,6 @@ class MealsScreen extends StatelessWidget {
       MaterialPageRoute(
         builder: (ctx) => MealDetailsItem(
           meal: meal,
-          onPressed: onPressed,
         ),
       ),
     );

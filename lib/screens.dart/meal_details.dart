@@ -1,23 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_app/model/meal.dart';
+import 'package:todo_app/providers/favourite_provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class MealDetailsItem extends StatelessWidget {
-  const MealDetailsItem(
-      {super.key, required this.meal, required this.onPressed});
-  final void Function(Meal meal) onPressed;
+class MealDetailsItem extends ConsumerWidget {
+  const MealDetailsItem({super.key, required this.meal});
 
   final Meal meal;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: Text(meal.title),
         actions: [
           IconButton(
             onPressed: () {
-              onPressed(meal);
+              final isAdded = ref
+                  .read(favoriteMealsProvider.notifier)
+                  .toggleFavoriteMeals(meal);
+
+              ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(isAdded
+                      ? 'Added as a favorite'
+                      : 'Removed as a favorite'),
+                ),
+              );
             },
             icon: const Icon(Icons.star),
           ),

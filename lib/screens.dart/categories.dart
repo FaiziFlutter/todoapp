@@ -6,9 +6,7 @@ import 'package:todo_app/widgets/category_grid_items.dart';
 import '../model/meal.dart';
 
 class CategoriesScreen extends StatelessWidget {
-  const CategoriesScreen(
-      {super.key, required this.onPressed, required this.availableMeals});
-  final void Function(Meal meal) onPressed;
+  const CategoriesScreen({super.key, required this.availableMeals});
   final List<Meal> availableMeals;
 
   void _categoriesScreen(BuildContext context, Category category) {
@@ -20,7 +18,6 @@ class CategoriesScreen extends StatelessWidget {
       MaterialPageRoute(
         builder: (context) {
           return MealsScreen(
-            onPressed: onPressed,
             title: category.title,
             meals: filteredMeals,
           );
