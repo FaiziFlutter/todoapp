@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_app/providers/favourite_provider.dart';
-import 'package:todo_app/providers/meal_provider.dart';
 import 'package:todo_app/screens.dart/categories.dart';
 import 'package:todo_app/screens.dart/filter.dart';
 import 'package:todo_app/screens.dart/meals.dart';
 import 'package:todo_app/widgets/main_drawer.dart';
 
-const kInitialFilters = {
-  Filter.glutenFree: false,
-  Filter.lactoseFree: false,
-  Filter.vegetarian: false,
-  Filter.vegan: false,
-};
+import '../providers/filter_provider.dart';
 
 class TabScreen extends ConsumerStatefulWidget {
   const TabScreen({super.key});
@@ -23,7 +17,6 @@ class TabScreen extends ConsumerStatefulWidget {
 
 class _TabScreenState extends ConsumerState<TabScreen> {
   int activePageIndex = 0;
-  Map<Filter, bool> _selectedFilters = kInitialFilters;
 
   void _selectPage(int index) {
     setState(() {
@@ -34,37 +27,17 @@ class _TabScreenState extends ConsumerState<TabScreen> {
   void _setScreen(String identifier) async {
     Navigator.of(context).pop();
     if (identifier == 'filters') {
-      final result = await Navigator.of(context).push<Map<Filter, bool>>(
+      await Navigator.of(context).push<Map<Filter, bool>>(
         MaterialPageRoute(
-          builder: (ctx) => FiltersScreen(
-            currentFilters: _selectedFilters,
-          ),
+          builder: (ctx) => const FiltersScreen(),
         ),
       );
-      setState(() {
-        _selectedFilters = result ?? kInitialFilters;
-      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final meals = ref.watch(mealsProvider);
-    final availableMeals = meals.where((meal) {
-      if (_selectedFilters[Filter.glutenFree]! && !meal.isGlutenFree) {
-        return false;
-      }
-      if (_selectedFilters[Filter.lactoseFree]! && !meal.isLactoseFree) {
-        return false;
-      }
-      if (_selectedFilters[Filter.vegetarian]! && !meal.isVegetarian) {
-        return false;
-      }
-      if (_selectedFilters[Filter.vegan]! && !meal.isVegan) {
-        return false;
-      }
-      return true;
-    }).toList();
+    final availableMeals = ref.watch(filteredMealsProvider);
 
     var title = 'Categories';
     Widget activeScreen = CategoriesScreen(
