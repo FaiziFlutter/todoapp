@@ -25,6 +25,7 @@ class MealsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     Widget content = Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -32,15 +33,15 @@ class MealsScreen extends StatelessWidget {
           Text(
             'Uh oh ... nothing here!',
             style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onBackground,
-                ),
+                color: Theme.of(context).colorScheme.onBackground,
+                fontSize: width * 0.06),
           ),
           const SizedBox(height: 16),
           Text(
             'Try selecting a different category!',
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onBackground,
-                ),
+                color: Theme.of(context).colorScheme.onBackground,
+                fontSize: width * 0.03),
           ),
         ],
       ),
@@ -64,10 +65,7 @@ class MealsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(title!),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(2.0),
-        child: content,
-      ),
+      body: content,
     );
   }
 }

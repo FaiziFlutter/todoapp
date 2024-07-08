@@ -25,10 +25,13 @@ class MealItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+
     return Card(
-      margin: const EdgeInsets.all(8),
+      margin: EdgeInsets.all(width * 0.01),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(width * 0.04),
       ),
       clipBehavior: Clip.hardEdge,
       elevation: 2,
@@ -42,7 +45,7 @@ class MealItem extends StatelessWidget {
               placeholder: MemoryImage(kTransparentImage),
               image: NetworkImage(meal.imageUrl),
               fit: BoxFit.cover,
-              height: 200,
+              height: height * 0.3,
               width: double.infinity,
             ),
             Positioned(
@@ -51,8 +54,8 @@ class MealItem extends StatelessWidget {
               right: 0,
               child: Container(
                 color: Colors.black54,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 6, horizontal: 44),
+                padding: EdgeInsets.symmetric(
+                    vertical: width * 0.035, horizontal: height * 0.01),
                 child: Column(
                   children: [
                     Text(
@@ -61,13 +64,13 @@ class MealItem extends StatelessWidget {
                       textAlign: TextAlign.center,
                       softWrap: true,
                       overflow: TextOverflow.ellipsis, // Very long text ...
-                      style: const TextStyle(
-                        fontSize: 20,
+                      style: TextStyle(
+                        fontSize: width * 0.055,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: height * 0.01),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -75,12 +78,12 @@ class MealItem extends StatelessWidget {
                           icon: Icons.schedule,
                           label: '${meal.duration} min',
                         ),
-                        const SizedBox(width: 12),
+                        SizedBox(width: width * 0.02),
                         MealItemTrait(
                           icon: Icons.work,
                           label: complexityText,
                         ),
-                        const SizedBox(width: 12),
+                        SizedBox(width: width * 0.02),
                         MealItemTrait(
                           icon: Icons.attach_money,
                           label: affordabilityText,
