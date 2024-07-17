@@ -59,6 +59,8 @@ class _TabScreenState extends ConsumerState<TabScreen> {
       ),
       body: activeScreen,
       bottomNavigationBar: BottomNavigationBar(
+        selectedIconTheme: const IconThemeData(color: Colors.white),
+        elevation: BorderSide.strokeAlignCenter,
         onTap: _selectPage,
         currentIndex: activePageIndex,
         items: const [
